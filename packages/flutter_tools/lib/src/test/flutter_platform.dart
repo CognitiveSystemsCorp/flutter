@@ -52,6 +52,7 @@ FlutterPlatform installHook({
   TestWatcher watcher,
   bool enableObservatory = false,
   bool machine = false,
+  bool keepAppInstalled = false,
   String precompiledDillPath,
   Map<String, String> precompiledDillFiles,
   bool updateGoldens = false,
@@ -81,6 +82,7 @@ FlutterPlatform installHook({
     debuggingOptions: debuggingOptions,
     watcher: watcher,
     machine: machine,
+    keepAppInstalled: keepAppInstalled,
     enableObservatory: enableObservatory,
     host: _kHosts[serverType],
     precompiledDillPath: precompiledDillPath,
@@ -276,6 +278,7 @@ class FlutterPlatform extends PlatformPlugin {
     this.watcher,
     this.enableObservatory,
     this.machine,
+    this.keepAppInstalled,
     this.host,
     this.precompiledDillPath,
     this.precompiledDillFiles,
@@ -294,6 +297,7 @@ class FlutterPlatform extends PlatformPlugin {
   final bool enableObservatory;
   final bool machine;
   final InternetAddress host;
+  final bool keepAppInstalled;
   final String precompiledDillPath;
   final Map<String, String> precompiledDillFiles;
   final bool updateGoldens;
@@ -403,6 +407,7 @@ class FlutterPlatform extends PlatformPlugin {
     if (_isIntegrationTest) {
       return IntegrationTestTestDevice(
         id: ourTestCount,
+        keepAppInstalled: keepAppInstalled,
         debuggingOptions: debuggingOptions,
         device: integrationTestDevice,
         userIdentifier: integrationTestUserIdentifier,

@@ -139,6 +139,12 @@ class TestCommand extends FlutterCommand with DeviceBasedDevelopmentArtifacts {
         help: 'Handle machine structured JSON command input '
               'and provide output and progress in machine friendly format.',
       )
+      ..addFlag('keep-app-installed',
+        defaultsTo: false,
+        help: 'Will keep the Flutter application installed when done testing.\n'
+              'By default, "flutter test" uninstalls the application after the test stops, '
+              'and "--keep-app-installed" overrides this.',
+      )
       ..addFlag('update-goldens',
         negatable: false,
         help: 'Whether "matchesGoldenFile()" calls within your test methods should ' // flutter_ignore: golden_tag (see analyze.dart)
@@ -442,6 +448,7 @@ class TestCommand extends FlutterCommand with DeviceBasedDevelopmentArtifacts {
       enableObservatory: collector != null || startPaused || boolArg('enable-vmservice'),
       ipv6: boolArg('ipv6'),
       machine: machine,
+      keepAppInstalled: boolArg('keep-app-installed'),
       updateGoldens: boolArg('update-goldens'),
       concurrency: jobs,
       buildTestAssets: buildTestAssets,

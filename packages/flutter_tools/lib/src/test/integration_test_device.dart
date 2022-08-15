@@ -22,12 +22,14 @@ const String kIntegrationTestMethod = 'ext.flutter.integrationTest';
 class IntegrationTestTestDevice implements TestDevice {
   IntegrationTestTestDevice({
     required this.id,
+    required this.keepAppInstalled,
     required this.device,
     required this.debuggingOptions,
     required this.userIdentifier,
   });
 
   final int id;
+  final bool keepAppInstalled;
   final Device device;
   final DebuggingOptions debuggingOptions;
   final String userIdentifier;
@@ -119,8 +121,10 @@ class IntegrationTestTestDevice implements TestDevice {
       if (!await device.stopApp(applicationPackage, userIdentifier: userIdentifier)) {
         globals.printTrace('Could not stop the Integration Test app.');
       }
-      if (!await device.uninstallApp(applicationPackage, userIdentifier: userIdentifier)) {
-        globals.printTrace('Could not uninstall the Integration Test app.');
+      if (!keepAppInstalled) {
+        if (!await device.uninstallApp(applicationPackage, userIdentifier: userIdentifier)) {
+          globals.printTrace('Could not uninstall the Integration Test app.');
+        }
       }
     }
 
